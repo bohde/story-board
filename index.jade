@@ -1,0 +1,19 @@
+!!! 5
+html(lang:"en")
+  head
+    title StoryBoard
+    script(src:"https://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js")
+    script(src:"http://cachedcommons.org/cache/underscore/1.1.0/javascripts/underscore-min.js")
+    script(src:"http://cachedcommons.org/cache/mustache/0.3.0/javascripts/mustache-min.js")
+    script(src:"vendor/ICanHaz.min.js")
+    script(src:"vendor/backbone-min.js")
+    script(src:"vendor/backbone-localstorage.js")
+    script(src:"app.js")
+    script(type:"text/html", id:"card")
+      li.card
+        span As a {{ user }}  
+        span I'd like to {{ action }}
+        spans So that I can {{ reason }}
+  body
+    ul#cards
+  
