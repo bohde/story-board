@@ -10,10 +10,17 @@ html(lang:"en")
     script(src:"vendor/backbone-localstorage.js")
     script(src:"app.js")
     script(type:"text/html", id:"card")
-      li.card
-        span As a {{ user }}  
-        span I'd like to {{ action }}
-        spans So that I can {{ reason }}
+      li.card 
+        p As a 
+          em.user {{ user }}  
+        p I'd like to 
+          em.action {{ action }}
+        p So that I can 
+          em.reason {{ reason }}
+        a.delete(href:"#") Delete
+    script(type:"text/html", id:"overviewTemplate")
+      a.add(href:"#") New Card
   body
+    div#overview
     ul#cards
   
