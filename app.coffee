@@ -82,6 +82,8 @@ $ ->
 
       @render()
       Stories.fetch()
+      if !Stories.length
+        @create()
 
     create: ->
       Stories.create()
