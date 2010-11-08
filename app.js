@@ -80,7 +80,8 @@
         Stories.bind('add', this.addOne);
         Stories.bind('refresh', this.addAll);
         this.render();
-        return Stories.fetch();
+        Stories.fetch();
+        return !Stories.length ? this.create() : null;
       },
       create: function() {
         Stories.create();
