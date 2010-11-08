@@ -1,0 +1,5 @@
+This is an prototype of some thoughts I've had on an app for taking user stories. 
+
+It's written in [Coffeescript](http://jashkenas.github.com/coffee-script/), using [Backbone.js](http://documentcloud.github.com/backbone/#), with [ICanHaz.js](https://github.com/andyet/ICanHaz.js) and [Mustache.js](https://github.com/janl/mustache.js) for templating. 
+
+Templates are in [Jade](http://jade-lang.com/), and styling done by (Sass)[http://sass-lang.com/]. 
