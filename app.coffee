@@ -1,12 +1,14 @@
 $ ->
   window.Story = Backbone.Model.extend
     EMPTY:
-      user: '[ user ]'
-      action: '[ do something ]'
-      reason: '[ achieve some business requirement ]'
+      title: 'New Story'
+      user: '[user]'
+      action: '[do something]'
+      reason: '[achieve some business requirement]'
 
     initialize: ->
       @set
+        title: @get('title') || @EMPTY.title
         user: @get('user') || @EMPTY.user
         action: @get('action') || @EMPTY.action
         reason: @get('reason') || @EMPTY.reason
@@ -26,7 +28,7 @@ $ ->
     tagName: 'li'
 
     events:
-      'dblclick em': 'edit'
+      'dblclick em,h2': 'edit'
       'focusout input': 'update'
       'keypress input': 'updateOnEnter'
       'click .delete': 'delete'

@@ -9,18 +9,26 @@ html(lang:"en")
     script(src:"vendor/backbone-min.js")
     script(src:"vendor/backbone-localstorage.js")
     script(src:"app.js")
+    
+    link(href:"style.css", rel:"stylesheet")
+
     script(type:"text/html", id:"card")
       li.card 
+        a.delete(href:"#") &#x2297; 
+        h2.title {{ title }}
         p As a 
-          em.user {{ user }}  
-        p I'd like to 
+          em.user {{ user }}
+          |, I'd like to 
           em.action {{ action }}
-        p So that I can 
+          |, so that I can 
           em.reason {{ reason }}
-        a.delete(href:"#") Delete
+          |.
+
     script(type:"text/html", id:"overviewTemplate")
-      a.add(href:"#") New Card
+      a.add.icon(href:"#") &#x2295; Add Story
+
   body
-    div#overview
+    h1 User Stories
     ul#cards
+    div#overview
   

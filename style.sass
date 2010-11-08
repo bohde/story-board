@@ -1,0 +1,77 @@
+=border-radius(!radius)
+  border-radius = !radius
+  -moz-border-radius = !radius
+  -webkit-border-radius = !radius
+
+=box-shadow(!horiz, !vert, !width, !color)
+  -moz-box-shadow: !horiz !vert !width !color
+  -webkit-box-shadow: !horiz !vert !width !color
+  box-shadow: !horiz !vert !width !color
+
+h1
+  text-align: center
+  text-shadow: 1px 1px 1px #eee
+
+html
+  background-color: #777
+  font-family: "Helvetica Neue", Arial, sans-serif
+
+ul#cards
+  list-style: none
+  margin: auto
+  width: 640px
+
+.card
+  margin: 1em
+  padding: 1em
+  background-color: #fff
+  +box-shadow(0, 1px, 2px, #000)
+
+.card p
+  color: #888
+
+.card h2
+  margin: 0
+  text-shadow: 1px 1px 1px #888
+  display: inline-block
+
+.card em,
+.card h2
+  border-bottom: 1px dotted
+
+.card input
+  border: none
+  padding: .25em
+  background-color: #eee
+  outline-width: 0
+
+.delete, 
+.icon
+  font-size: 2em
+
+.delete,
+.add
+  text-decoration: none
+  color: #333
+  margin: 0 .125em
+  display: inline-block
+
+.delete
+  float: right
+  display: none
+
+.card:hover .delete
+  display: inline
+
+.delete:hover,
+.add:hover
+  color: #777
+
+.add
+  background-color: #fff
+  +box-shadow(0, 1px, 1px, #000)
+  font-size: 1.5em
+  padding: .25em .5em
+
+#overview
+  text-align: center
