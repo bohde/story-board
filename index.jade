@@ -15,13 +15,21 @@ html(lang:"en")
     script(type:"text/html", id:"card")
       li.card 
         a.delete(href:"#") &#x2297; 
-        h2.title {{ title }}
+        div.title 
+          h2 {{ title }}
+          input(value:"{{ title }}")
         p As a 
-          em.user {{ user }}
+          span.user 
+            em {{ user }}
+            input(value:"{{user}}")
           |, I'd like to 
-          em.action {{ action }}
+          span.action
+            em {{ action }}
+            input(value:"{{ action }}")
           |, so that I can 
-          em.reason {{ reason }}
+          span.reason
+            em {{ reason }}
+            textarea {{ reason }}
           |.
 
     script(type:"text/html", id:"overviewTemplate")

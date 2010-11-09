@@ -24,49 +24,49 @@ $ ->
 
   window.Stories = new StoryBoard
 
-  window.StoryView = Backbone.View.extend
-    tagName: 'li'
+  window.StoryView = Backbone.View.extend (->
+      attrs =
+        tagName: 'li'
 
-    events:
-      'dblclick em,h2': 'edit'
-      'focusout input': 'update'
-      'keypress input': 'updateOnEnter'
-      'click .delete': 'delete'
+        events:
+          'click .delete': 'delete'
+          'keypress input,textarea': 'focusOutOnEnter'
 
-    initialize: ->
-      _.bindAll @, 'render', 'close'
-      @model.bind 'change', @render
-      @model.view = @
-      @input = $('<input></input>')
-      @editing = null
+        initialize: ->
+          _.bindAll @, 'render', 'close'
+          @model.bind 'change', @render
+          @model.view = @
 
-    render: ->
-      $(@el).html ich.card(@model.toJSON())
-      @
+        render: ->
+          $(@el).html ich.card @model.toJSON()
+          @
 
-    edit: (event) ->
-      el = $(event.target)
-      @editing = el.attr 'class'
-      val = @model.get @editing
-      @input.val(val)
-      el.after(@input).remove()
-      @input.focus()
+        delete: ->
+          @model.clear()
+          false
 
-    updateOnEnter: (e) ->
-      if e.keyCode == 13
-        @update()
+        focusOutOnEnter: (event) ->
+          if event.keyCode == 13
+            $(event.target).focusout()
 
-    update: ->
-      @input.attr 'class'
-      kwargs = {}
-      kwargs[@editing] = @input.val()
-      @editing = null
-      @model.save(kwargs)
-      @render()
+      edit = (attr) ->
+        (event) ->
+          @$('.'+attr).addClass('editing').find('input,textarea').focus()
 
-    delete: ->
-      @model.clear()
-      false
+      update = (attr) ->
+        (event) ->
+            kwargs = {}
+            kwargs[attr] = @$('.'+attr).removeClass('editing').find('input,textarea').val()
+            @model.save kwargs
+
+
+      _(['title', 'user', 'action', 'reason']).each (attr) ->
+        attrs['edit'+attr] = edit attr
+        attrs.events['dblclick .'+attr] = 'edit'+attr
+        attrs['update'+attr] = update attr
+        attrs.events['focusout .'+attr] = 'update'+attr
+
+      attrs)()
 
   window.BoardView = Backbone.View.extend
     el: $ 'body'
