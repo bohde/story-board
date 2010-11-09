@@ -31,11 +31,24 @@ ul#cards {
 .card h2 {
   border-bottom: 1px dotted; }
 
-.card input {
+.card input,
+.card textarea {
   border: none;
   padding: 0.25em;
   background-color: #eeeeee;
-  outline-width: 0; }
+  outline-width: 0;
+  display: none; }
+
+.card .editing em,
+.card .editing h2 {
+  display: none; }
+
+.card .editing input {
+  display: inline; }
+
+.card .editing textarea {
+  display: block;
+  width: 100%; }
 
 .delete,
 .icon {

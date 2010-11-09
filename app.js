@@ -25,51 +25,52 @@
       localStorage: new Store('stories')
     });
     window.Stories = new StoryBoard();
-    window.StoryView = Backbone.View.extend({
-      tagName: 'li',
-      events: {
-        'dblclick em,h2': 'edit',
-        'focusout input': 'update',
-        'keypress input': 'updateOnEnter',
-        'click .delete': 'delete'
-      },
-      initialize: function() {
-        _.bindAll(this, 'render', 'close');
-        this.model.bind('change', this.render);
-        this.model.view = this;
-        this.input = $('<input></input>');
-        return (this.editing = null);
-      },
-      render: function() {
-        $(this.el).html(ich.card(this.model.toJSON()));
-        return this;
-      },
-      edit: function(event) {
-        var el, val;
-        el = $(event.target);
-        this.editing = el.attr('class');
-        val = this.model.get(this.editing);
-        this.input.val(val);
-        el.after(this.input).remove();
-        return this.input.focus();
-      },
-      updateOnEnter: function(e) {
-        return e.keyCode === 13 ? this.update() : null;
-      },
-      update: function() {
-        var kwargs;
-        this.input.attr('class');
-        kwargs = {};
-        kwargs[this.editing] = this.input.val();
-        this.editing = null;
-        this.model.save(kwargs);
-        return this.render();
-      },
-      "delete": function() {
-        this.model.clear();
-        return false;
-      }
-    });
+    window.StoryView = Backbone.View.extend((function() {
+      var attrs, edit, update;
+      attrs = {
+        tagName: 'li',
+        events: {
+          'click .delete': 'delete',
+          'keypress input,textarea': 'focusOutOnEnter'
+        },
+        initialize: function() {
+          _.bindAll(this, 'render', 'close');
+          this.model.bind('change', this.render);
+          return (this.model.view = this);
+        },
+        render: function() {
+          $(this.el).html(ich.card(this.model.toJSON()));
+          return this;
+        },
+        "delete": function() {
+          this.model.clear();
+          return false;
+        },
+        focusOutOnEnter: function(event) {
+          return event.keyCode === 13 ? $(event.target).focusout() : null;
+        }
+      };
+      edit = function(attr) {
+        return function(event) {
+          return this.$('.' + attr).addClass('editing').find('input,textarea').focus();
+        };
+      };
+      update = function(attr) {
+        return function(event) {
+          var kwargs;
+          kwargs = {};
+          kwargs[attr] = this.$('.' + attr).removeClass('editing').find('input,textarea').val();
+          return this.model.save(kwargs);
+        };
+      };
+      _(['title', 'user', 'action', 'reason']).each(function(attr) {
+        attrs['edit' + attr] = edit(attr);
+        attrs.events['dblclick .' + attr] = 'edit' + attr;
+        attrs['update' + attr] = update(attr);
+        return (attrs.events['focusout .' + attr] = 'update' + attr);
+      });
+      return attrs;
+    })());
     window.BoardView = Backbone.View.extend({
       el: $('body'),
       events: {
